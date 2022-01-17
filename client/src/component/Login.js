@@ -1,8 +1,20 @@
 import React, {useState} from 'react'
+import { Link } from 'react-router-dom';
+import Axios from 'axios';
 
 export default function Login() {
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
+
+    const login = () => {
+        console.log(username);
+        Axios.post("http://localhost:3001/login", {
+            username: username, 
+            password: password
+        }).then((response) => {
+            console.log('success');
+        });
+    }
 
     return (
         <div>
@@ -15,7 +27,8 @@ export default function Login() {
                 setPassword(event.target.value);
             }}/><br/>   
             <br/>
-            <button>Log in</button>
+            <button onClick={login}>Log in</button><br/>
+            No account? <Link to="/regis">Register</Link>
         </div>
     )
 }

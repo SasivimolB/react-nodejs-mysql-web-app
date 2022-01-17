@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom';
+import Axios from 'axios';
 
 export default function Register() {
     const [username, setUsername] = useState();
@@ -9,10 +11,17 @@ export default function Register() {
 
     const addUser = () => {
         console.log(username);
+        Axios.post("http://localhost:3001/regis", {
+            username: username, 
+            password: password
+        }).then((response) => {
+            console.log('success');
+        });
     }
 
     return (
         <div>
+            <label>Username:</label><br/>
             <input type="text" name="username" onChange={(event) => { 
                 setUsername(event.target.value); 
             }}/><br/>
@@ -32,7 +41,8 @@ export default function Register() {
                 setFile(event.target.value);
             })}/><br/>
             <br/>
-            <button onClick={addUser}>Sign up</button>
+            <button onClick={addUser}>Register</button><br/>
+            Already have an account? <Link to="/">Log in</Link>
         </div>
     )
 }
