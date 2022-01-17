@@ -1,16 +1,22 @@
-import logo from './logo.svg';
 import './App.css';
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import Register from './component/Register';
+import Login from './component/Login';
+import Dashboard from './component/Dashboard';
+import EditProfile from './component/EditProfile';
 
 function App() {
   return (
     <div className="App">
       <div>
-        <label>Username:</label><br/>
-        <input type="text" name="username"/><br/>
-        <label>Password:</label><br/>
-        <input type="password" name="password"/><br/>
-        <br/>
-        <Button>Log in</Button>
+        <Router>
+          <Routes>
+            <Route exact path="/" component={Dashboard} />
+            <Route path="/regis" component={Register} />
+            <Route path="/login" component={Login} />
+            <Route path="/edit-profile" component={EditProfile} />
+          </Routes>
+        </Router>
       </div>
     </div>
   );
