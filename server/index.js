@@ -15,3 +15,10 @@ db.connect(function(err){
     if(err) throw err;
     console.log("Connected.");
 })
+
+app.post('/regis', (req, res) => {
+    const username = req.body.username
+    const password = req.body.password
+
+    console.log(username);
+})
