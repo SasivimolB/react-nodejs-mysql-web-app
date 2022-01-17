@@ -49,7 +49,13 @@ app.post('/login', (req, res)=> {
                     console.log(err);
                 }
                 else {
-                    console.log(res);
+                    //console.log(res[0].password)
+                    if(bcrypt.compareSync(password, res[0].password)) {
+                        console.log("matching")
+                    }
+                    else {
+                        console.log("not match")
+                    }
                 }
             }
         )
