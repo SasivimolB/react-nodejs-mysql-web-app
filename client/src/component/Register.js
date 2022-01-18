@@ -80,22 +80,22 @@ export default function Register() {
     return (
         <div>
             <label>Username:</label><br/>
-            <input type="text" name="username" onChange={(event) => { 
+            <input type="text" name="username" required onChange={(event) => { 
                 setUsername(event.target.value); 
             }}/><br/>
             <label>Password:</label><br/>
-            <input type="password" name="password" onChange={(event) => {
+            <input type="password" name="password" required onChange={(event) => {
                 setPassword(event.target.value);
             }}/><br/>
             <label>First name:</label><br/>
-            <input type="text" name="firstname" onChange={(event) => {
+            <input type="text" name="firstname" required onChange={(event) => {
                 setFirstname(event.target.value);
             }}/><br/>
             <label>Last name:</label><br/>
-            <input type="text" name="lastname" onChange={(event) => {
+            <input type="text" name="lastname" required onChange={(event) => {
                 setLastname(event.target.value);
             }}/><br/>
-            <input type="file" onChange={(event => {
+            <input type="file" required onChange={(event => {
                 // setFilename(event.target.files[0].name)
                 // setFile(event.target.files[0])
                 setuserInfo({
