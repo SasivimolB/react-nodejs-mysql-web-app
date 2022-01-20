@@ -1,9 +1,10 @@
 const router = require('express').Router();
 const db = require('../connection/dbcon');
-const validate = require('../validation/validate');
+const validateU = require('../validation/valusername');
+const validateP = require('../validation/valpassword');
 const bcrypt = require('bcrypt');
 
-router.post('/register', validate.validateUsernamePassword, (req, res) => {
+router.post('/register', validateU.validateUsername, validateP.validatePassword, (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
     const firstname = req.body.firstname;
