@@ -1,10 +1,11 @@
 const router = require('express').Router();
 const db = require('../connection/dbcon');
-const validate = require('../validation/valRegister');
+const validateUsername = require('../validation/valuname');
+const validatePassword = require('../validation/valpw')
 const picUpload = require('./pic');
 const bcrypt = require('bcrypt');
 
-router.post('/register', picUpload, validate.validateRegister, (req, res) => {
+router.post('/register', picUpload, picUpload, validateUsername.validateUsername, validatePassword.validatePassword, (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
     const firstname = req.body.firstname;
@@ -36,11 +37,11 @@ router.post('/register', picUpload, validate.validateRegister, (req, res) => {
                                                 (err, result) => {
                                                     if(err) {
                                                         console.log(err);
-                                                        res.send({message: "Failed to register."});
+                                                        res.status(400).send({message: "Failed to register."});
                                                     }
                                                     else {
                                                         //console.log("Password Inserted");
-                                                        res.send({message: "Registered successfully."});
+                                                        res.status(200).send({message: "Registered successfully."});
                                                     }
                                                 }
                                             );

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import Axios from 'axios';
 
 export default function Register() {
@@ -11,7 +11,7 @@ export default function Register() {
         file:[],
         filepreview:null,
     });
-    const [regisStatus, setRegisStatus] = useState();
+    const [regisStatus, setRegisStatus] = useState(null);
 
     const addUser = () => {
         const formdata = new FormData(); 
@@ -20,10 +20,15 @@ export default function Register() {
         formdata.append('firstname', firstname);
         formdata.append('lastname', lastname);
         formdata.append('profilepic', userInfo.file);
-        Axios.post("http://localhost:3001/regis", formdata, {
+        Axios.post("http://localhost:3001/api/user/register", formdata, {
             headers: { "Content-Type": "multipart/form-data, boundary=${form._boundary}" }
         }).then((response) => {
-            setRegisStatus(response.data.message);
+            setRegisStatus("Registered Successfully... Redirecting to Login page");
+            setTimeout(() => {
+                <Navigate to = "/login" />
+              }, 3000);
+        }).catch((err) => {
+            setRegisStatus("Failed to register");
         });
     }
 
@@ -57,7 +62,7 @@ export default function Register() {
             })}/><br/>
             <br/>
             <button onClick={addUser}>Register</button><br/>
-            Already have an account? <Link to="/login">Log in</Link>
+            Already have an account? <Link to="/">Log in</Link>
         </div>
     )
 }

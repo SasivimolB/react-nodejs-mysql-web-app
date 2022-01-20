@@ -1,5 +1,5 @@
 module.exports = {
-    validateRegister: (req, res, next) => {
+    validateUsernamePassword: (req, res, next) => {
         //---USERNAME---
         // username length <= 12
         if(!req.body.username || req.body.username.length > 12) {

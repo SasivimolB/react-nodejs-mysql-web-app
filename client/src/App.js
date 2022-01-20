@@ -4,31 +4,22 @@ import Register from './component/Register';
 import Login from './component/Login';
 import Dashboard from './component/Dashboard';
 import EditProfile from './component/EditProfile';
-//import PrivateRoute from './component/PrivateRoute';
+import { AuthProvider } from "./component/AuthContext";
 
 function App() {
   return (
     <div className="App">
-      <div>
-        <Router>
-          {/* <Routes>
-            <Route exact path="/" element={<PrivateRoute/>}>
-              <Route exact path="/" element={<Dashboard />} />
-            </Route>
-            <Route path="/regis" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-            <Route exact path="/edit-profile" element={<PrivateRoute/>}>
-              <Route path="/edit-profile" element={<EditProfile />} />
-            </Route>
-          </Routes> */}
-          <Routes>
-            <Route exact path="/" element={<Register/>} />
-            <Route path="/regis" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-            <Route exact path="/edit-profile" element={<EditProfile/>} />
-          </Routes>
-        </Router>
-      </div>
+      <Router>
+        <AuthProvider>
+        <Routes>
+          <Route exact path="/" element={<Login/>} />
+          <Route path="/regis" element={<Register />} />
+          {/* <Route path="/login" element={<Login />} /> */}
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route exact path="/edit" element={<EditProfile/>} />
+        </Routes>
+        </AuthProvider>
+      </Router>
     </div>
   );
 }
