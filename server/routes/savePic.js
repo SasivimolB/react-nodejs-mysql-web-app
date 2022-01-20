@@ -8,10 +8,10 @@ router.post('/savePic', picUpload, (req, res) => {
         [profilepic, username],
         (err, result2) => {
             if(result2) {
-                res.status(200).send("Save profile pic successfully")
+                return res.send({status: true, message: "Save profile picture successfully"})
             }
             else {
-                res.status(401).send("Can't save profile pic")
+                return res.send({status: false, message: "Failed to save profile picture"})
             }
         }
     )

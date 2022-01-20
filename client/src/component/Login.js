@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import React, { useState } from 'react'
-import { Link, Navigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 
 export default function Login() {
@@ -9,29 +9,42 @@ export default function Login() {
 
     const [status, setStatus] = useState();
 
+    const navigate = useNavigate();
+
     const {
-        currentUser, setCurrentUser,
-        firstname, setFirstname,
-        lastname, setLastname,
-        profilepic, setProfilepic
+        setCurrentUser,
+        setFirstname,
+        setLastname,
+        setProfilepic
     } = useAuth();
  
     const login = () => {
-        Axios.post("http://localhost:3001/api/user/login", {
-            username: username, 
-            password: password
-        }).then((response) => {
-            setStatus("Login successful");
-            //localStorage.setItem("token", response.data.token);
-            console.log(response);
-            setCurrentUser(response.data.user);
-            setFirstname(response.data.firstname);
-            setLastname(response.data.lastname);
-            setProfilepic(response.data.profilepic);
-            console.log(currentUser);
-        }).catch((err) => {
-            setStatus("Wrong username and/or password");
-        });
+        if(username && password)
+        {
+            Axios.post("http://localhost:3001/api/user/login", {
+                username: username, 
+                password: password
+            }).then((response) => {
+                console.log(response)
+                if(response.data.status) {
+                    setStatus("Login successful... Redirecting to Dashboard page");
+                    setCurrentUser(response.data.user);
+                    setFirstname(response.data.firstname);
+                    setLastname(response.data.lastname);
+                    setProfilepic(response.data.profilepic);
+                    setTimeout(() => {
+                        navigate('/')
+                    }, 2000);
+                }
+                else {
+                    setStatus("Wrong username and/or password")
+                }
+            })
+        }
+        else{
+            setStatus("Please fill both username and password")
+        }
+        
     }
 
     return (
@@ -39,7 +52,6 @@ export default function Login() {
             <h1>Login</h1>
 
             <h2>{status}</h2>
-            {currentUser && <Navigate to = "/dashboard" />}
 
             <label>Username:</label><br/>
             <input type="text" name="username" onChange={(event) => { 

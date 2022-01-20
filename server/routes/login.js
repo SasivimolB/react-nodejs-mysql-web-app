@@ -11,26 +11,23 @@ router.post('/login', (req, res)=> {
             'SELECT * FROM userpw WHERE username = ? ORDER BY pwid DESC LIMIT 1',
             [username],
             (err, result) => {
-                if(result.length<1) {
-                    //console.log("This username does not exist.")
-                    res.status(401).send({  message: "This username does not exist."});
+                if(result.length < 1) {
+                    return res.send({  message: "This username does not exist."});
                 }
                 else {
                     if(bcrypt.compareSync(password, result[0].password)) {
-                        //console.log("Logged in.")
-                        // const token = jwt.sign({id: result[0].id}, process.env.TOKEN_SECRET);
-                        // res.header('auth-token', token);
-                        // res.send(token)
                         db.query(
                             'SELECT * FROM userinfo WHERE username = ?', [username],
-                            (err, result2) => {
-                                if(result2.length>0)
+                            (err, result) => {
+                                console.log(result)
+                                if(result.length>0)
                                 {
-                                    res.status(200).send({ 
-                                        user: username, 
-                                        firstname: result2[0].firstname,
-                                        lastname: result2[0].lastname,
-                                        profilepic: result2[0].profilepic
+                                    return res.send({ 
+                                        status: true,
+                                        user: result[0].username, 
+                                        firstname: result[0].firstname,
+                                        lastname: result[0].lastname,
+                                        profilepic: result[0].profilepic
                                     })
                                 }
                             }
@@ -39,7 +36,7 @@ router.post('/login', (req, res)=> {
                     }
                     else {
                         //console.log("Wrong username and/or password.")
-                        res.status(401).send({ message: "Wrong username and/or password."})
+                        return res.send({ status: false, message: "Wrong username and/or password."})
                     }
                 }
             }

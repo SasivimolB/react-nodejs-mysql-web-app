@@ -1,46 +1,57 @@
 import Axios from 'axios';
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
-
-
 
 export default function EditProfile() {
 
     const {
-        currentUser,
-        firstname,
-        lastname
+        currentUser, setCurrentUser,
+        firstname, setFirstname,
+        lastname, setLastname,
+        setProfilepic
     } = useAuth();
     
     const [username, setUsername] = useState(currentUser);
-    const [oldUsername, setOldUsername] = useState(currentUser);
-    const [password, setPassword] = useState();
+    const oldUsername = currentUser;
+    const [password, setPassword] = useState('N0P4S5W0R0');
     const [fname, setFname] = useState(firstname);
     const [lname, setLname] = useState(lastname);
     const [userInfo, setuserInfo] = useState({
         file:[],
         filepreview:null,
     });
+
+    const [status, setStatus] = useState(null);
+
+    const navigate = useNavigate();
     
     const editInfo = () => {
-        // if(oldUsername == username) {setUsername(null)}
-        if(!password) {setPassword('N0P4S5W0R0');}
-        const formdata = new FormData(); 
-        formdata.append('username', username);
-        formdata.append('oldUsername', oldUsername);
-        formdata.append('password', password);
-        formdata.append('firstname', fname);
-        formdata.append('lastname', lname);
+        console.log(username, password, fname, lname)
+        //if(password==null) {setPassword('N0P4S5W0R0');}
         Axios.post("http://localhost:3001/api/user/edit", {
             username: username,
             oldUsername: oldUsername,
             password: password,
-            firstname: firstname,
-            lastname: lastname
-        })
-        .then((response) => {
+            firstname: fname,
+            lastname: lname
+        }).then((response) => {
             console.log(response)
-        });
+            if(response.data.status) {
+                setStatus("Updated Successfully... Redirecting to Dashboard page");
+                setCurrentUser(username);
+                setPassword(null)
+                setFirstname(fname);
+                setLastname(lname);
+                setProfilepic(response.data.profilepic);
+                setTimeout(() => {
+                    navigate('/')
+                }, 2000);
+            }
+            else {
+                setStatus(response.data.message)
+            }
+        })
     }
 
     const savePic = () => {
@@ -48,15 +59,21 @@ export default function EditProfile() {
         formdata.append('oldUsername', oldUsername);
         formdata.append('profilepic', userInfo.file);
         Axios.post("http://localhost:3001/api/user/savePic", formdata, {
-            headers: { "Content-Type": "multipart/form-data, boundary=${form._boundary}" }
+            headers: { "Content-Type": "multipart/form-data" }
         }).then((response) => {
-            console.log(response)
+            if(response.data.status) {
+                setStatus("Uploaded profile picture Successfully");
+            }
+            else {
+                setStatus("Failed to upload profile picture")
+            }
         })
     }
 
     return (
         <div>
             <h1>Edit Profile</h1>
+            <h3>{status}</h3>
             <label>Username:</label><br/>
             <input type="text" name="username" value={username} onChange={(event) => { 
                 setUsername(event.target.value)
