@@ -53,6 +53,7 @@ export default function EditProfile() {
         })
     }
     const editfname = () => {
+        console.log(fname)
         Axios.post("http://localhost:3001/api/user/edit-firstname", {
             username: username,
             firstname: fname
@@ -67,7 +68,7 @@ export default function EditProfile() {
         })
     }
     const editlname = () => {
-        Axios.post("http://localhost:3001/api/user/edit-username", {
+        Axios.post("http://localhost:3001/api/user/edit-lastname", {
             username: username,
             lastname: lname
         }).then((response) => {

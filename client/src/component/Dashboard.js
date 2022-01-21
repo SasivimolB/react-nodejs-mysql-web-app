@@ -1,3 +1,4 @@
+import '../App.css';
 import React from 'react'
 import { useNavigate  } from 'react-router-dom';
 import { useAuth } from './AuthContext'
@@ -21,7 +22,7 @@ export default function Dashboard() {
             <h3>Lastname: {lastname}</h3>
             <button onClick={() => {
                 navigate('/edit');
-            }}>Edit Profile</button>
+            }}>Edit Profile</button>&nbsp;
             <button onClick={() => {
                 setCurrentUser(null)
                 navigate('/login');

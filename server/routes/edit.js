@@ -85,15 +85,18 @@ router.post('/edit-password', validateP.validatePassword, (req, res) => {
 
 router.post('/edit-firstname', (req, res) => {
 
+    console.log('EDIT FIRSTNAME')
+
     const username = req.body.username;
     const firstname = req.body.firstname;
 
     db.query(
-        'UPDATE userinfo SET firstname=?, WHERE username=?', [firstname],
+        'UPDATE userinfo SET firstname=? WHERE username=?', [firstname, username],
         (err, result) => {
             if(result) {
                 res.send({status: true, message:"Updated first name"})
             }
+            //console.log(err)
         }
     )
     
@@ -101,15 +104,18 @@ router.post('/edit-firstname', (req, res) => {
 
 router.post('/edit-lastname', (req, res) => {
 
+    console.log('EDIT LASTNAME')
+
     const username = req.body.username;
     const lastname = req.body.lastname;
 
     db.query(
-        'UPDATE userinfo SET lastname=? WHERE username=?',[lastname],
+        'UPDATE userinfo SET lastname=? WHERE username=?',[lastname, username],
         (err, result) => {
             if(result) {
                 res.send({status: true, message:"Updated last name"})
             }
+            console.log(err)
         }
     )
 
