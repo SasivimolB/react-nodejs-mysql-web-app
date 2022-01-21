@@ -12,7 +12,7 @@ module.exports = {
         var rep = /[a-zA-Z]{2,}|\d{2,}/g;
         if(!req.body.password || req.body.password.match(rep)) {
             return res.send({
-                message: 'Please do not use consecutive alphabets or numbers in the password'
+                message: 'Please do not use consecutive alphabets and/or numbers in the password'
             });
         }
 

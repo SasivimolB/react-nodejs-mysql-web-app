@@ -76,7 +76,7 @@ router.post('/edit-password', validateP.validatePassword, (req, res) => {
                 else {
                     console.log("PASSWORD is the same with previous 5 passwords");
                     console.log(username, password)
-                    return res.send({status: false, message:"The password is the same with previous 5 passwords"});
+                    return res.send({status: false, message:"The password is the same with one of previous 5 passwords"});
                 }
             }
         }

@@ -13,7 +13,7 @@ module.exports = {
         var reu = /^\w+$/;
         if(!req.body.username || !(req.body.username.match(reu))) {
             return res.send({
-                message: 'Please use only alphabet characters(A-Z, a-z), numbers(0-9), and underscore(_) in the username'
+                message: 'Please use only alphabets(A-Z, a-z), numbers(0-9), and underscore(_) in the username'
             });
         }
 

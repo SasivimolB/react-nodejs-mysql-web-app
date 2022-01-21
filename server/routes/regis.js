@@ -27,7 +27,8 @@ router.post('/register', validateU.validateUsername, validateP.validatePassword,
                                     'INSERT INTO userpw(username, password) VALUES( ?, ?)',
                                     [ username, hash],
                                     (err, result) => {
-                                        if(err) {
+                                        if(result) {
+                                            return res.send({status: true, message: "Registered Successfully."});
                                         }
                                     }
                                 );

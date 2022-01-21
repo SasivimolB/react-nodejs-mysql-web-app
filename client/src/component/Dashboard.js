@@ -18,8 +18,8 @@ export default function Dashboard() {
         <div>
             <img src={filepath + profilepic}/>
             <h3>Username: {currentUser}</h3>
-            <h3>Firstname: {firstname}</h3>
-            <h3>Lastname: {lastname}</h3>
+            <h3>First name: {firstname}</h3>
+            <h3>Last name: {lastname}</h3>
             <button onClick={() => {
                 navigate('/edit');
             }}>Edit Profile</button>&nbsp;
